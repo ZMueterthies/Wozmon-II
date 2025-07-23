@@ -9,22 +9,22 @@ RESET:                  ; FF00
         NOP NOP NOP
         NOP NOP NOP
 NOTCR:                  ; FF0F
-        NOP NOP
-        NOP NOP
-        NOP NOP
-        NOP NOP
-        NOP
-        NOP NOP
+        CMP #$5F                ; Backspace? (Actually '_').
+        BEQ BACKSPACE
+        CMP #$1B                ; ESC?
+        BEQ ESCAPE
+        INY                     ; Advance text index.
+        BPL NEXTCHAR            ; Auto ESC if > 127.
 ESCAPE:                 ; FF1A
-        NOP NOP
-        NOP NOP NOP
+        LDA #$5C                ; Load '\' into accumulator.
+        JSR ECHO                ; Jump to subroutine ECHO to print '\'.
 GETLINE:                ; FF1F
-        NOP NOP
-        NOP NOP NOP
-        NOP NOP
+        LDA #$0D                ; Load CR into accumulator.
+        JSR ECHO                ; Jump to subroutine ECHO to print CR.
+        LDY #$01                ; Initialize text index.
 BACKSPACE:              ; FF26
-        NOP
-        NOP NOP
+        DEY
+        BMI GETLINE
 NEXTCHAR:               ; FF29
         NOP NOP NOP
         NOP NOP

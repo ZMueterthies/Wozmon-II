@@ -37,8 +37,8 @@ NOTCR:
         INY             ; Advance text index.
         BPL NEXTCHAR    ; Auto ESC if > 127.
 ESCAPE:
-        LDA #$DC        ; Load '/' into accumulator.
-        JSR ECHO        ; Jump to subroutine ECHO to print '/'
+        LDA #$DC        ; Load '\' into accumulator.
+        JSR ECHO        ; Jump to subroutine ECHO to print '\'
 GETLINE:
         LDA #$8D        ; Load CR into accumulator.
         JSR ECHO        ; Jump to subroutine ECHO to print CR.
